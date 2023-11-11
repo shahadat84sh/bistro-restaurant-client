@@ -1,26 +1,58 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../Provider/Authprovider";
+import { FaShoppingCart } from 'react-icons/fa';
+import useCart from "../../../Hooks/useCart";
 
 const Navbar = () => {
-  const {user, logOut} = useContext(AuthContext)
+  const { user, logOut } = useContext(AuthContext);
+  const [ cart ] = useCart()
   const handleLogout = () => {
     logOut()
-    .then( result =>{})
-    .catch(err => console.log(err))
-  }
-    const navOptions = <>
-             <li><Link to='/'>Home</Link></li>
-             <li><Link to='/secret'>Secret</Link></li>
-            <li><Link to='/menu'>Our Menu</Link></li>
-            <li><Link to='/order/salad'>Order Food</Link> </li>
-            
-            {user? <>
-              <button onClick={handleLogout} className="btn btn-outline btn-ghost btn-sm">LogOut</button>
-            </>:<>
-            <li><Link to='/login'>Log in</Link> </li>
-            </>}
+      .then((result) => {})
+      .catch((err) => console.log(err));
+  };
+  const navOptions = (
+    <>
+      <li>
+        <Link to="/">Home</Link>
+      </li>
+      <li>
+        <Link to="/secret">Secret</Link>
+      </li>
+      <li>
+        <Link to="/menu">Our Menu</Link>
+      </li>
+      <li>
+        <Link to="/">
+          <button className="btn btn-sm">
+            <FaShoppingCart className="text-2xl"/>
+            <div className="badge badge-secondary">+{cart?.length || 0}</div>
+          </button>
+        </Link>
+      </li>
+      <li>
+        <Link to="/order/salad">Order Food</Link>{" "}
+      </li>
+
+      {user ? (
+        <>
+          <button
+            onClick={handleLogout}
+            className="btn btn-outline btn-ghost btn-sm"
+          >
+            LogOut
+          </button>
+        </>
+      ) : (
+        <>
+          <li>
+            <Link to="/login">Log in</Link>{" "}
+          </li>
+        </>
+      )}
     </>
+  );
 
   return (
     <>
@@ -47,15 +79,13 @@ const Navbar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
-                {navOptions}
+              {navOptions}
             </ul>
           </div>
           <a className="btn btn-ghost normal-case text-xl">Bistro Boss</a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            {navOptions}
-          </ul>
+          <ul className="menu menu-horizontal px-1">{navOptions}</ul>
         </div>
         <div className="navbar-end">
           <a className="btn">Button</a>
