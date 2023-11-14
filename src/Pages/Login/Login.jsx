@@ -5,6 +5,7 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-s
 import { AuthContext } from '../../Provider/Authprovider';
 import { Helmet } from 'react-helmet-async';
 import Swal from 'sweetalert2';
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 
 
 
@@ -110,7 +111,8 @@ const handleCaptcha = (e) =>{
                 <input className="btn btn-primary" disabled={disabled} type="submit" value="Login Now" />
               </div>
             </form>
-            <p className='text-sky-300 text-center mb-5'>New Here ? <Link to='/signup'>Crete a Account</Link></p>
+            <p className='text-sky-300 text-center'>New Here ? <Link to='/signup'>Crete a Account</Link></p>
+            <SocialLogin></SocialLogin>
           </div>
         </div>
       </div>

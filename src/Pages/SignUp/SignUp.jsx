@@ -2,35 +2,49 @@ import { useContext } from "react";
 import { AuthContext } from "../../Provider/Authprovider";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
 const SignUp = () => {
   const { createUser, updateUser } = useContext(AuthContext);
-
+  const navigate = useNavigate()
   const handleSignIn = (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
+    const name = form.name.value;
+    const url = form.photo.value;
     createUser(email, password)
       .then((result) => {
         const user = result.user;
         console.log(user);
-        if (user.uid) {
-            Swal.fire({
-              position: "top",
-              icon: "success",
-              title: "User Created Successfully!",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            // updateUser(user.name, user.photo)
-            // .then()
-            // .catch()
-            // // navigate('/)
-        }
+
+        updateUser(name, url)
+        .then( () =>{
+          const savedUser = {name:name, email:email}
+          fetch('http://localhost:5000/users', {
+            method:'POST',
+            headers:{
+              'content-type':'application/json'
+            },
+            body:JSON.stringify(savedUser)
+          })
+          .then(res => res.json())
+          .then(data => {
+            if(data.insertedId){
+              Swal.fire({
+                position: "top",
+                icon: "success",
+                title: "User Created Successfully!",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              navigate('/')
+            }
+          })
+        })
       })
-      .catch((err) => console.log(err));
     form.reset();
   };
 
@@ -76,6 +90,18 @@ const SignUp = () => {
               </div>
               <div className="form-control">
                 <label className="label">
+                  <span className="label-text">Photo Url</span>
+                </label>
+                <input
+                  type="url"
+                  name="photo"
+                  placeholder="Photo url"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
                   <span className="label-text">Password</span>
                 </label>
                 <input
@@ -94,7 +120,8 @@ const SignUp = () => {
                 />
               </div>
             </form>
-            <p className='text-sky-300 text-center mb-5'>Already have an account ? <Link to='/login'>Log In</Link></p>
+            <p className='text-sky-300 text-center'>Already have an account ? <Link to='/login'>Log In</Link></p>
+            <SocialLogin></SocialLogin>
           </div>
         </div>
       </div>

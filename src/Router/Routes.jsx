@@ -9,6 +9,12 @@ import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
 import Secret from "../Pages/secret/secret";
 import PrivateRoute from "./PrivateRoute";
+import Dashboard from "../Layout/Dashboard";
+import Mycart from "../Pages/Dashboard/Mycart/Mycart";
+import Allusers from "../Pages/Dashboard/Mycart/Allusers/Allusers";
+import AddItem from "../Pages/Dashboard/AddItem/AddItem";
+import AdminRoute from "./AdminRoute";
+import ManageItems from "../Pages/Dashboard/ManageItems/ManageItems";
  
   
  export const router = createBrowserRouter([
@@ -42,4 +48,26 @@ import PrivateRoute from "./PrivateRoute";
         }
       ]
     },
+    {
+      path:'/dashboard',
+      element:<PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+      children:[
+        {
+          path:'mycart',
+          element:<Mycart></Mycart>
+        },
+        {
+          path:'allusers',
+          element:<Allusers></Allusers>
+        },
+        {
+          'path':'additem',
+          element:<AdminRoute><AddItem></AddItem></AdminRoute>
+        },
+        {
+          path:'manageitem',
+          element:<AdminRoute><ManageItems></ManageItems></AdminRoute>
+        }
+      ]
+    }
   ]);
