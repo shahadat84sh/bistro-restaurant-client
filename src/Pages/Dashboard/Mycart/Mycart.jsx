@@ -1,8 +1,9 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import useCart from "../../../Hooks/useCart";
 import { FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+import useCart from "../../../hooks/useCart";
 
 const Mycart = () => {
   const [cart,refetch] = useCart();
@@ -43,7 +44,7 @@ const Mycart = () => {
       <div className="uppercase text-semibold flex justify-evenly h-[60px] items-center">
         <h1 className="text-3xl">Total order :{cart.length}</h1>
         <h1 className="text-3xl">Total Price: ${totalPrice}</h1>
-        <button className="btn bg-[#D1A054] btn-sm">Pay now</button>
+        <Link to='/dashboard/payment'><button className="btn bg-[#D1A054] btn-sm">Pay now</button></Link>
       </div>
       <div className="overflow-x-auto">
         <table className="table">
@@ -58,12 +59,12 @@ const Mycart = () => {
             </tr>
           </thead>
           <tbody>
-            {cart.map((item, index) =><tr>
+            {cart.map((item, index) =><tr key={item._id}>
               <th>{index + 1}</th>
               <td>
                 <div className="flex items-center space-x-3">
                   <div className="avatar">
-                    <div className="mask mask-squircle w-12 h-12">
+                    <div className="mask mask-circle w-12 h-12">
                       <img
                         src={item.image}
                         alt="Avatar Tailwind CSS Component"
