@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
 const SignUp = () => {
-  const { createUser, updateUser } = useContext(AuthContext);
+  const { createUser, updateUserProfile } = useContext(AuthContext);
   const navigate = useNavigate()
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -20,10 +20,10 @@ const SignUp = () => {
         const user = result.user;
         console.log(user);
 
-        updateUser(name, url)
+        updateUserProfile(name, url)
         .then( () =>{
           const savedUser = {name:name, email:email}
-          fetch('http://localhost:5000/users', {
+          fetch('https://bisto-boss-server-two.vercel.app/users', {
             method:'POST',
             headers:{
               'content-type':'application/json'

@@ -10,7 +10,7 @@ import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 
 
 const Login = () => {
-  const {loginUser} = useContext(AuthContext);
+  const {signIn} = useContext(AuthContext);
     const [disabled, setDisabled] = useState(true)
     const navigate = useNavigate();
     const location = useLocation()
@@ -24,7 +24,7 @@ const handleLogin = (e) =>{
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    loginUser(email, password)
+    signIn(email, password)
     .then(result =>{
       const user = result.user;
       console.log(user);

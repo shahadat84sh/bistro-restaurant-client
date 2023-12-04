@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import useCart from "../../../hooks/useCart";
 
 const Mycart = () => {
-  const [cart,refetch] = useCart();
+  const [cart, refetch] = useCart();
   const totalPrice = cart.reduce((sum, item) => item.price + sum, 0);
 
   const handleDelete = (item) =>{
@@ -20,7 +20,7 @@ const Mycart = () => {
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.isConfirmed) {
-            fetch(`http://localhost:5000/carts/${item._id}`,{
+            fetch(`https://bisto-boss-server-two.vercel.app/carts/${item._id}`,{
                 method:"DELETE"
             })
             .then(res => res.json())

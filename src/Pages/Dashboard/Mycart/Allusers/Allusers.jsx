@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { FaTrashAlt, FaUserAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
-import useAxiosSecure from "../../../../Hooks/useAxiosSecure";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 
 const Allusers = () => {
-  const [axiosSecure] = useAxiosSecure();
+  const [axiosSecure] = useAxiosSecure
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
@@ -13,7 +13,7 @@ const Allusers = () => {
     },
   });
   const handleAdmin = (user) => {
-    fetch(`http://localhost:5000/users/admin/${user._id}`, {
+    fetch(`https://bisto-boss-server-two.vercel.app/users/admin/${user._id}`, {
       method: "PATCH",
     })
       .then((res) => res.json())

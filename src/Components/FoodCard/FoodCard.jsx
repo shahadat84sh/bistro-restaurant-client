@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../Provider/Authprovider";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
-import useCart from "../../Hooks/useCart";
+import useCart from "../../hooks/useCart";
 
 const FoodCard = ({items}) => {
   const {name, recipe, image, price, _id} = items;
@@ -15,7 +15,7 @@ const FoodCard = ({items}) => {
   const handleAddToCart = item =>{
     if(user && user.email){
       const cartItem = {menuItemId : _id, name, price, image, email: user.email}
-      fetch('http://localhost:5000/carts', {
+      fetch('https://bisto-boss-server-two.vercel.app/carts', {
         method:"POST",
         headers:{
           "content-type":"application/json"

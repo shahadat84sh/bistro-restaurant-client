@@ -7,13 +7,13 @@ const SocialLogin = () => {
     const navigate = useNavigate();
     const location = useLocation()
     let from = location.state?.from?.pathname || "/";
-const {googleLogin} = useContext(AuthContext)
+const {googleSignIn} = useContext(AuthContext)
     const handleLogin = () =>{
-        googleLogin()
+      googleSignIn()
         .then(result =>{
             const loggedUser = result.user;
             const savedUser = {name:loggedUser.displayName, email:loggedUser.email}
-            fetch('http://localhost:5000/users', {
+            fetch('https://bisto-boss-server-two.vercel.app/users', {
             method:'POST',
             headers:{
               'content-type':'application/json'
